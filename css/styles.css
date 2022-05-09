@@ -17,9 +17,65 @@ img {
   width: 150px;
   border-radius: 100px;
 }
+.card{
+  background:pink; 
+  padding:20px;
+  margin:15px;
+  flex-wrap: wrap;
+  border-radius: 20px;
+  display: flex;
+}
+.info{
+  padding-left: 50px;
+    margin-top: 30px;
+    line-height: 30px;
+    font-size: 17px
+    
+}
+.submitButton.active,.deleteButton.active{
+  
+  position: absolute;
+bottom: 0;
+right: 0;
+ 
+  
+}
+.submitButton{
+  background-color:rgb(133, 151, 221);
+}
+.editButton,.deleteButton,.submitButton{
+  width: 80px;
+  height: 40px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+ 
+  margin: 8px;
+  padding: 5px;
+ 
+ font-size: 18px;
+ color: white;
+
+ 
+}
+.editButton,.deleteButton{
+ 
+  align-self: flex-end;
+}
+.editButton{
+  background-color: rgb(133, 151, 221);
+}
+.deleteButton{
+  background-color: rgb(223, 62, 62);
+  align-self: flex-end;
+}
+
+ /* .textbox{
+  border-style: none;
+}  */
 .modal {
   position: fixed;
-  top: 30%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   border-radius: 20px;
@@ -42,7 +98,7 @@ img {
   font-size: 20px;
   font-weight: bold;
 }
-.modal-header .close-button {
+.modal-header .close-button{
   border: none;
   outline: none;
   cursor: pointer;
@@ -61,13 +117,12 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
   pointer-events: none;
   transition: 200ms ease-in-out;
   z-index: 2;
 }
 #overlay.active {
   pointer-events: all;
-  background-color: rgba(0, 0, 0, 0.5);
+ 
   opacity: 1;
 }
