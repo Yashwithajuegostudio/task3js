@@ -32,7 +32,7 @@ img {
     font-size: 17px
     
 }
-.submitButton.active,.deleteButton.active{
+.submitButton{
   
   position: absolute;
 bottom: 0;
