@@ -70,9 +70,14 @@ right: 0;
   align-self: flex-end;
 }
 
- /* .textbox{
-  border-style: none;
-}  */
+ input{
+   width: 200px;
+   
+   margin: 12px;
+   display: inline-block;
+ 
+   font-size: 20px;
+ }
 .modal {
   position: fixed;
   top: 50%;
@@ -81,7 +86,7 @@ right: 0;
   border-radius: 20px;
   z-index: 10;
   background-color: rgb(194, 206, 193);
-  width: 400px;
+  width: 500px;
   transition: 200ms ease-in-out;
 }
 .modal.active {
