@@ -19,7 +19,7 @@ img {
 }
 .card{
   background:pink; 
-  padding:20px;
+  padding:25px;
   margin:15px;
   flex-wrap: wrap;
   border-radius: 20px;

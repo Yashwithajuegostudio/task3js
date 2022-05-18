@@ -23,8 +23,6 @@ function show(data) {
   for (var i = 0; i < data.length; i++) {
     const card = document.createElement("div");
     card.className = "card";
-    const img = document.createElement("img");
-    img.src = data[i].tourist_profilepicture;
     const info = document.createElement("div");
     info.className = "info";
     const edit = document.createElement("button");
@@ -60,7 +58,7 @@ function show(data) {
       "Loaction: " +
       data[i].tourist_location;
     var userId = data[i].id;
-    card.appendChild(img);
+   
     card.appendChild(info);
     card.appendChild(edit);
     card.appendChild(deleteButton);
@@ -84,6 +82,10 @@ function show(data) {
       console.log(id)
       
       //fetchName
+      inputboxName.addEventListener('change',()=>{
+       var name=inputboxName.innerHTML;
+       console.log(name)
+      })
      inputboxName.innerHTML=fetchName.innerHTML
       var name=fetchName.innerHTML;
       console.log(name)
@@ -107,35 +109,38 @@ function show(data) {
       
       modalBody.appendChild(submit);
 
-      submit.addEventListener("click", ({value=id},name,email,location) => {
-       
-        // (async () => {
-        //   const requestOptions = {
-        //     method: "PUT",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({
-        //       id: value,
+      submit.addEventListener("click", ({value=id}) => {
+      //  inputboxName.addEventListener('click',()=>{
+      //   var name=inputboxName.innerHTML;
+      //   console.log(inputboxName.innerHTML)
+      //  });
+        (async () => {
+          const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: value,
             
-        //       tourist_name: name,
-        //       tourist_email: email,
-        //       tourist_location: location,
+              tourist_name: name,
+              tourist_email: email,
+              tourist_location: location,
              
-        //     }),
-        //   };
+            }),
+          };
           console.log(value)
           console.log(typeof(name))
           console.log(email)
           console.log(location)
-          // const response = await fetch(
-          //   "http://restapi.adequateshop.com/api/Tourist/"+value,
-          //   requestOptions
-          // );
-          // const data = await response.json();
+          const response = await fetch(
+            "http://restapi.adequateshop.com/api/Tourist/"+value,
+            requestOptions
+          );
+          const data = await response.json();
          
-          // inputboxName.innerHTML = data.updatedAt;
-          // inputboxEmail.innerHTML = data.updatedAt;
-          // inputboxLocation.innerHTML = data.updatedAt;
-        // })();
+          inputboxName.innerHTML = data.updatedAt;
+          inputboxEmail.innerHTML = data.updatedAt;
+          inputboxLocation.innerHTML = data.updatedAt;
+        })();
         // modalBody.removeChild(inputboxName);
       
         // modalBody.removeChild(inputboxEmail);
