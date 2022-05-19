@@ -1,17 +1,14 @@
-const base_api_url = "http://restapi.adequateshop.com/api/Tourist";
+import { getApi,deleteApi } from "./apiHelper";
 
-async function getapi(url) {
-  const response = await fetch(url);
-  var data = await response.json();
-  console.log(data.data);
-  if (response) {
-    console.log("wait...");
-  }
-  show(data.data);
-}
-getapi(base_api_url);
+const base_api_url = "http://restapi.adequateshop.com/api/Tourist";
+const headers = { "content-type": "application/json" };
+const getUrl = "http://restapi.adequateshop.com/api/Tourist";
+const getData = (data) => { show(data) }
+getApi(getUrl, headers, getData);
+
 
 function show(data) {
+  
   var Container = document.getElementById("tourists");
   const overlay = document.getElementById("overlay");
   const modal = document.getElementById("modal");
@@ -35,11 +32,13 @@ function show(data) {
     submit.className = "submitButton";
     submit.innerHTML = "Submit";
     const inputboxName = document.createElement("input")
+    inputboxName.className='input'
     const inputboxEmail = document.createElement("input");
     const inputboxLocation = document.createElement("input");
     
     const fetchId =document.createElement('inputbox');
     const fetchName =document.createElement('inputbox');
+    
     const fetchEmail =document.createElement('inputbox');
     const fetchLocation =document.createElement('inputbox');
    
@@ -62,47 +61,51 @@ function show(data) {
     card.appendChild(info);
     card.appendChild(edit);
     card.appendChild(deleteButton);
-    console.log(userId);
+   
     fetchId.innerHTML=data[i].id;
     fetchEmail.innerHTML=data[i].tourist_email;
     fetchName.innerHTML=data[i].tourist_name;
     fetchLocation.innerHTML=data[i].tourist_location;
-   
+    // document.getElementById('input').value=data[i].tourist_name
+  
     
 
-    edit.addEventListener("click", () => {
+    edit.addEventListener("click", (e) => {
+      e.stopImmediatePropagation()
       if (modal == null) return;
       console.log("editbutton clicked");
       modal.classList.add("active");
       overlay.classList.add("active");
       deleteButton.classList.remove("active");
+     
       // fetchId
       
       var id=fetchId.innerHTML;
       console.log(id)
-      
+    
       //fetchName
-      inputboxName.addEventListener('change',()=>{
-       var name=inputboxName.innerHTML;
-       console.log(name)
-      })
-     inputboxName.innerHTML=fetchName.innerHTML
-      var name=fetchName.innerHTML;
-      console.log(name)
-        //fetchEmail
-     inputboxEmail.innerHTML=fetchEmail.innerHTML
-     var email=fetchEmail.innerHTML;
+      inputboxName.value=fetchName.innerHTML
+      modalBody.appendChild(inputboxName);
+      var name=inputboxName.value;
+     console.log(name)
+      
+     
+      //fetchEmail
+     inputboxEmail.value=fetchEmail.innerHTML
+     modalBody.appendChild(inputboxEmail)
+     var email=inputboxEmail.value;
      console.log(email)
       //fetchEmail
-      inputboxLocation.innerHTML=fetchLocation.innerHTML
-      var location=fetchLocation.innerHTML;
+      inputboxLocation.value=fetchLocation.innerHTML
+      var location=inputboxLocation.innerHTML;
       console.log(location)
 
       
       
       
       
-      modalBody.appendChild(inputboxName);
+     
+      
       
       // modalBody.appendChild(inputboxEmail);
       // modalBody.appendChild(inputboxLocation);
@@ -120,19 +123,15 @@ function show(data) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               id: value,
-            
               tourist_name: name,
               tourist_email: email,
               tourist_location: location,
              
             }),
           };
-          console.log(value)
-          console.log(typeof(name))
-          console.log(email)
-          console.log(location)
+        
           const response = await fetch(
-            "http://restapi.adequateshop.com/api/Tourist/"+value,
+            `http://restapi.adequateshop.com/api/Tourist/${id}`,
             requestOptions
           );
           const data = await response.json();
@@ -152,8 +151,9 @@ function show(data) {
       });
     });
 
-    deleteButton.addEventListener("click", () => {
-      if (modal != null) return;
+    deleteButton.addEventListener("click", (e) => {
+      e.stopImmediatePropagation()
+      if (modal == null) return;
       console.log("deletebutton clicked");
 
       modal.classList.add("active");
@@ -161,22 +161,50 @@ function show(data) {
       modalBody.innerHTML = info.innerHTML;
       submit.innerHTML = "Delete";
       modalBody.appendChild(submit);
+      var id=fetchId.innerHTML;
 
       submit.addEventListener("click", () => {
-        Container.removeChild(card);
+        const deleteUrl = `http://restapi.adequateshop.com/api/Tourist/${id}`;
+        const deleteData = (data) => document.location.reload();
+        deleteApi(deleteUrl, deleteData);
+       
+        // (async () => {
+        //   const requestOptions = {
+        //     method: "DELETE",
+        //     headers: { "Content-Type": "application/json" },
+            // body: JSON.stringify({
+            //   id: value
 
+            //   // tourist_name: fetchName.value,
+            //   // tourist_email: fetchEmail.value,
+            //   // tourist_location: fetchLocation.value,
+             
+            // }),
+          // };
+          // const response = await fetch(
+          //   `http://restapi.adequateshop.com/api/Tourist/${id}`,
+          //   requestOptions
+          // );
+          // const data = await response.json();
+         
+          // inputboxName.innerHTML = data.updatedAt;
+          // inputboxEmail.innerHTML = data.updatedAt;
+          // inputboxLocation.innerHTML = data.updatedAt;
+        // })();
+        Container.removeChild(card);
         if (modal == null) return;
         modal.classList.remove("active");
         overlay.classList.remove("active");
-        alert("card is deleted");
+        alert(`Card ${id} is Deleted`);
       });
     });
-    card.addEventListener("click", () => {
-      if (modal != null) return;
+    card.addEventListener("click", (e) => {
+      e.stopImmediatePropagation()
+      if (modal == null) return;
       modal.classList.add("active");
       overlay.classList.add("active");
 
-      modalBody.innerText = img.src;
+      
       console.log(modalBody.innerHTML);
 
       modalBody.innerHTML = info.innerHTML;
@@ -190,3 +218,5 @@ function show(data) {
     Container.appendChild(card);
   }
 }
+
+export {show}
