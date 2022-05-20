@@ -17,67 +17,63 @@ img {
   width: 150px;
   border-radius: 100px;
 }
-.card{
-  background:pink; 
-  padding:25px;
-  margin:15px;
+.card {
+  background: pink;
+  padding: 25px;
+  margin: 15px;
   flex-wrap: wrap;
   border-radius: 20px;
   display: flex;
 }
-.info{
+.info {
   padding-left: 50px;
-    margin-top: 30px;
-    line-height: 30px;
-    font-size: 17px
-    
+  margin-top: 30px;
+  line-height: 30px;
+  font-size: 17px;
 }
-.submitButton{
-  
+.submitButton {
   position: absolute;
-bottom: 0;
-right: 0;
- 
-  
+  bottom: 0;
+  right: 0;
 }
-.submitButton{
-  background-color:rgb(133, 151, 221);
+.submitButton {
+  background-color: rgb(133, 151, 221);
 }
-.editButton,.deleteButton,.submitButton{
+.editButton,
+.deleteButton,
+.submitButton {
   width: 80px;
   height: 40px;
   border: none;
   outline: none;
   border-radius: 10px;
- 
   margin: 8px;
   padding: 5px;
- 
- font-size: 18px;
- color: white;
-
- 
+  font-size: 18px;
+  color: white;
 }
-.editButton,.deleteButton{
- 
+.editButton,
+.deleteButton {
   align-self: flex-end;
 }
-.editButton{
+.editButton {
   background-color: rgb(133, 151, 221);
 }
-.deleteButton{
+.deleteButton {
   background-color: rgb(223, 62, 62);
   align-self: flex-end;
 }
 
- input{
-   width: 200px;
-   
-   margin: 12px;
-   display: inline-block;
- 
-   font-size: 20px;
- }
+input {
+  width: 300px;
+  padding: 10px;
+  margin: 12px;
+  display: flex;
+  font-size: 17px;
+}
+.label{
+  font-size: 20px; 
+}
 .modal {
   position: fixed;
   top: 50%;
@@ -103,7 +99,7 @@ right: 0;
   font-size: 20px;
   font-weight: bold;
 }
-.modal-header .close-button{
+.modal-header .close-button {
   border: none;
   outline: none;
   cursor: pointer;
@@ -113,8 +109,7 @@ right: 0;
 }
 .modal-body {
   padding: 10px 15px;
-  display: flex;
-  padding: 20px;
+  padding: 50px;
 }
 #overlay {
   opacity: 0;
@@ -128,6 +123,6 @@ right: 0;
 }
 #overlay.active {
   pointer-events: all;
- 
+
   opacity: 1;
 }

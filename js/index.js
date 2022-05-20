@@ -1,21 +1,19 @@
-import { getApi,deleteApi } from "./apiHelper";
+import { getApiCall, deleteApiCall, putApiCall } from "./apiHelper";
 
 const base_api_url = "http://restapi.adequateshop.com/api/Tourist";
 const headers = { "content-type": "application/json" };
 const getUrl = "http://restapi.adequateshop.com/api/Tourist";
-const getData = (data) => { show(data) }
-getApi(getUrl, headers, getData);
-
+const getData = (data) => {
+  show(data);
+};
+getApiCall(getUrl, headers, getData);
 
 function show(data) {
-  
   var Container = document.getElementById("tourists");
   const overlay = document.getElementById("overlay");
   const modal = document.getElementById("modal");
   const modalBody = document.getElementById("modal-body");
   const closeModalButtons = document.getElementById("close-button");
-  const submit = document.getElementsByClassName("submitButton");
-  const deleteButton = document.getElementById("delete");
 
   for (var i = 0; i < data.length; i++) {
     const card = document.createElement("div");
@@ -31,19 +29,28 @@ function show(data) {
     const submit = document.createElement("button");
     submit.className = "submitButton";
     submit.innerHTML = "Submit";
-    const inputboxName = document.createElement("input")
-    inputboxName.className='input'
+    submit.id = "submit";
+    // submit.disabled = true;
+    const nameLabel = document.createElement("label");
+    nameLabel.className = "label";
+    nameLabel.innerHTML = "Name : ";
+    const emailLabel = document.createElement("label");
+    emailLabel.className = "label";
+    emailLabel.innerHTML = "Email : ";
+    const locationLabel = document.createElement("label");
+    locationLabel.className = "label";
+    locationLabel.innerHTML = "Location : ";
+    const inputboxName = document.createElement("input");
+    inputboxName.id = "inputname";
     const inputboxEmail = document.createElement("input");
+    inputboxEmail.id = "inputmail";
     const inputboxLocation = document.createElement("input");
-    
-    const fetchId =document.createElement('inputbox');
-    const fetchName =document.createElement('inputbox');
-    
-    const fetchEmail =document.createElement('inputbox');
-    const fetchLocation =document.createElement('inputbox');
-   
-    
-   
+    inputboxLocation.id = "inputlocation";
+    const fetchId = document.createElement("inputbox");
+    const fetchName = document.createElement("inputbox");
+
+    const fetchEmail = document.createElement("inputbox");
+    const fetchLocation = document.createElement("inputbox");
 
     info.innerHTML =
       "Name: " +
@@ -57,160 +64,147 @@ function show(data) {
       "Loaction: " +
       data[i].tourist_location;
     var userId = data[i].id;
-   
+
     card.appendChild(info);
     card.appendChild(edit);
     card.appendChild(deleteButton);
-   
-    fetchId.innerHTML=data[i].id;
-    fetchEmail.innerHTML=data[i].tourist_email;
-    fetchName.innerHTML=data[i].tourist_name;
-    fetchLocation.innerHTML=data[i].tourist_location;
-    // document.getElementById('input').value=data[i].tourist_name
-  
-    
+
+    fetchId.innerHTML = data[i].id;
+    fetchEmail.innerHTML = data[i].tourist_email;
+    fetchName.innerHTML = data[i].tourist_name;
+    fetchLocation.innerHTML = data[i].tourist_location;
 
     edit.addEventListener("click", (e) => {
-      e.stopImmediatePropagation()
-      if (modal == null) return;
+      e.stopImmediatePropagation();
+
       console.log("editbutton clicked");
       modal.classList.add("active");
       overlay.classList.add("active");
       deleteButton.classList.remove("active");
-     
-      // fetchId
-      
-      var id=fetchId.innerHTML;
-      console.log(id)
-    
-      //fetchName
-      inputboxName.value=fetchName.innerHTML
-      modalBody.appendChild(inputboxName);
-      var name=inputboxName.value;
-     console.log(name)
-      
-     
-      //fetchEmail
-     inputboxEmail.value=fetchEmail.innerHTML
-     modalBody.appendChild(inputboxEmail)
-     var email=inputboxEmail.value;
-     console.log(email)
-      //fetchEmail
-      inputboxLocation.value=fetchLocation.innerHTML
-      var location=inputboxLocation.innerHTML;
-      console.log(location)
 
-      
-      
-      
-      
-     
-      
-      
-      // modalBody.appendChild(inputboxEmail);
-      // modalBody.appendChild(inputboxLocation);
-      
+      // fetchId
+      var id = fetchId.innerHTML;
+      console.log(id);
+
+      //fetchName
+      inputboxName.value = fetchName.innerHTML;
+      modalBody.appendChild(nameLabel);
+      modalBody.appendChild(inputboxName);
+
+      //fetchEmail
+      inputboxEmail.value = fetchEmail.innerHTML;
+      modalBody.appendChild(emailLabel);
+      modalBody.appendChild(inputboxEmail);
+
+      //fetchEmail
+      inputboxLocation.value = fetchLocation.innerHTML;
+      modalBody.appendChild(locationLabel);
+      modalBody.appendChild(inputboxLocation);
+
       modalBody.appendChild(submit);
 
-      submit.addEventListener("click", ({value=id}) => {
-      //  inputboxName.addEventListener('click',()=>{
-      //   var name=inputboxName.innerHTML;
-      //   console.log(inputboxName.innerHTML)
-      //  });
-        (async () => {
-          const requestOptions = {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              id: value,
-              tourist_name: name,
-              tourist_email: email,
-              tourist_location: location,
-             
-            }),
-          };
-        
-          const response = await fetch(
-            `http://restapi.adequateshop.com/api/Tourist/${id}`,
-            requestOptions
-          );
-          const data = await response.json();
+      inputboxName.addEventListener("change", () => {
+        if (inputboxName.value == "") {
+          alert("Fill the name");
+          submit.disabled=true
+          return false;
+        }
+        const enetredName = document.getElementById("inputname").value;
+        console.log(enetredName);
+        if(fetchName.value=document.getElementById('inputname')){
+          alert('change the input for update')
+          submit.disabled=true
+          return false
+        }else{
+          submit.disabled=false
+        }
+       
+      });
+     
+      inputboxEmail.addEventListener("change", () => {
+        if (inputboxEmail.value == "") {
+          alert("Fill out the Email");
+          submit.disabled=true
+          return false;
+        }
+
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        let enteredEmail = document.getElementById("inputmail").value;
+        if (!enteredEmail.match(mailformat)) {
+          alert("Invalid email address!");
+          submit.disabled=true
+          return false;
+        }
+
+        console.log(enteredEmail);
+      });
+     
+      inputboxLocation.addEventListener("change", () => {
+        if (inputboxLocation.value == "") {
+          alert("Fill the Location Field");
+          submit.disabled=true
+          return false;
+        }
+        var enteredLocation = document.getElementById("inputlocation").value;
+        console.log(enteredLocation);
+      });
+      
+      submit.addEventListener(
+        "click",
+        (
+          { value = id }
+          
+        ) => {
          
+
+          const updateUrl = `http://restapi.adequateshop.com/api/Tourist/${id}`;
+          const updateData = (data) => document.location.reload();
+          const body = JSON.stringify({
+            id: value,
+            tourist_name: document.getElementById('inputname'),
+            tourist_email: document.getElementById('inputemail'),
+            tourist_location: document.getElementById('inputlocation'),
+          });
+
+          putApiCall(updateUrl, headers, body, updateData);
           inputboxName.innerHTML = data.updatedAt;
           inputboxEmail.innerHTML = data.updatedAt;
           inputboxLocation.innerHTML = data.updatedAt;
-        })();
-        // modalBody.removeChild(inputboxName);
-      
-        // modalBody.removeChild(inputboxEmail);
-        // modalBody.removeChild(inputboxLocation);
-        
-        if (modal == null) return;
-        modal.classList.remove("active");
-        overlay.classList.remove("active");
-      });
+
+          modalBody.removeChild(inputboxName);
+          modalBody.removeChild(inputboxEmail);
+          modalBody.removeChild(inputboxLocation);
+
+          modal.classList.remove("active");
+          overlay.classList.remove("active");
+        }
+      );
     });
 
     deleteButton.addEventListener("click", (e) => {
-      e.stopImmediatePropagation()
-      if (modal == null) return;
-      console.log("deletebutton clicked");
-
+      e.stopImmediatePropagation();
       modal.classList.add("active");
       overlay.classList.add("active");
       modalBody.innerHTML = info.innerHTML;
       submit.innerHTML = "Delete";
       modalBody.appendChild(submit);
-      var id=fetchId.innerHTML;
-
+      var id = fetchId.innerHTML;
       submit.addEventListener("click", () => {
         const deleteUrl = `http://restapi.adequateshop.com/api/Tourist/${id}`;
         const deleteData = (data) => document.location.reload();
-        deleteApi(deleteUrl, deleteData);
-       
-        // (async () => {
-        //   const requestOptions = {
-        //     method: "DELETE",
-        //     headers: { "Content-Type": "application/json" },
-            // body: JSON.stringify({
-            //   id: value
-
-            //   // tourist_name: fetchName.value,
-            //   // tourist_email: fetchEmail.value,
-            //   // tourist_location: fetchLocation.value,
-             
-            // }),
-          // };
-          // const response = await fetch(
-          //   `http://restapi.adequateshop.com/api/Tourist/${id}`,
-          //   requestOptions
-          // );
-          // const data = await response.json();
-         
-          // inputboxName.innerHTML = data.updatedAt;
-          // inputboxEmail.innerHTML = data.updatedAt;
-          // inputboxLocation.innerHTML = data.updatedAt;
-        // })();
+        deleteApiCall(deleteUrl, deleteData);
         Container.removeChild(card);
-        if (modal == null) return;
         modal.classList.remove("active");
         overlay.classList.remove("active");
         alert(`Card ${id} is Deleted`);
       });
     });
     card.addEventListener("click", (e) => {
-      e.stopImmediatePropagation()
-      if (modal == null) return;
+      e.stopImmediatePropagation();
       modal.classList.add("active");
       overlay.classList.add("active");
-
-      
-      console.log(modalBody.innerHTML);
-
       modalBody.innerHTML = info.innerHTML;
-
       closeModalButtons.addEventListener("click", () => {
-        if (modal == null) return;
         modal.classList.remove("active");
         overlay.classList.remove("active");
       });
@@ -218,5 +212,3 @@ function show(data) {
     Container.appendChild(card);
   }
 }
-
-export {show}
