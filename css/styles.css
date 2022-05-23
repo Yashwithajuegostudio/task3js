@@ -2,35 +2,6 @@
   padding: 0;
   margin: 0;
 }
-h1 {
-  text-align: center;
-  margin-top: 20px;
-}
-.container {
-  height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-img {
-  width: 150px;
-  border-radius: 100px;
-}
-.card {
-  background: pink;
-  padding: 25px;
-  margin: 15px;
-  flex-wrap: wrap;
-  border-radius: 20px;
-  display: flex;
-}
-.info {
-  padding-left: 50px;
-  margin-top: 30px;
-  line-height: 30px;
-  font-size: 17px;
-}
 .submitButton {
   position: absolute;
   bottom: 0;
@@ -62,67 +33,4 @@ img {
 .deleteButton {
   background-color: rgb(223, 62, 62);
   align-self: flex-end;
-}
-
-input {
-  width: 300px;
-  padding: 10px;
-  margin: 12px;
-  display: flex;
-  font-size: 17px;
-}
-.label{
-  font-size: 20px; 
-}
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  border-radius: 20px;
-  z-index: 10;
-  background-color: rgb(194, 206, 193);
-  width: 500px;
-  transition: 200ms ease-in-out;
-}
-.modal.active {
-  transform: translate(-50%, -50%) scale(1);
-}
-.modal-header {
-  padding: 10px 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid black;
-}
-.modal-header .title {
-  font-size: 20px;
-  font-weight: bold;
-}
-.modal-header .close-button {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  background: none;
-  font-size: 25px;
-  font-weight: bold;
-}
-.modal-body {
-  padding: 10px 15px;
-  padding: 50px;
-}
-#overlay {
-  opacity: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  transition: 200ms ease-in-out;
-  z-index: 2;
-}
-#overlay.active {
-  pointer-events: all;
-
-  opacity: 1;
 }

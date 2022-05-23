@@ -1,7 +1,7 @@
 
 {
   "name": "my-project",
-  "source": "src/index.html",
+  "source": "src/touristList.html ",
   "scripts": {
     "start": "parcel",
     "build": "parcel build"
