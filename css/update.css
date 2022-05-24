@@ -5,9 +5,7 @@ input {
   display: flex;
   font-size: 17px;
 }
-.label {
-  font-size: 20px;
-}
+
 .modal {
   position: fixed;
   top: 50%;
@@ -57,6 +55,5 @@ input {
 }
 #overlay.active {
   pointer-events: all;
-
   opacity: 1;
 }
